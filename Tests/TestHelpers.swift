@@ -349,6 +349,7 @@ extension Session {
                       interceptor: interceptor)
     }
 
+    #if !(os(Linux) || os(Windows))
     @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
     func websocketRequest(_ endpoint: Endpoint,
                           protocol: String? = nil,
@@ -359,6 +360,7 @@ extension Session {
                          maximumMessageSize: maximumMessageSize,
                          interceptor: interceptor)
     }
+    #endif
 
     func download<Parameters: Encodable>(_ endpoint: Endpoint,
                                          parameters: Parameters? = nil,
