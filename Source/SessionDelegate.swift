@@ -259,6 +259,8 @@ extension SessionDelegate: URLSessionDataDelegate {
 
 // MARK: URLSessionWebSocketDelegate
 
+#if !(os(Linux) || os(Windows))
+
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
 extension SessionDelegate: URLSessionWebSocketDelegate {
     open func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didOpenWithProtocol protocol: String?) {
@@ -281,6 +283,8 @@ extension SessionDelegate: URLSessionWebSocketDelegate {
         request.didDisconnect(closeCode: closeCode, reason: reason)
     }
 }
+
+#endif
 
 // MARK: URLSessionDownloadDelegate
 

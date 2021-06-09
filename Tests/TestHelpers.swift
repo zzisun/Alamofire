@@ -221,7 +221,7 @@ struct Endpoint {
     }
 
     @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
-    static func websocket(closeCode: URLSessionWebSocketTask.CloseCode = .normalClosure, closeDelay: Int64 = 30) -> Endpoint {
+    static func websocket(closeCode: URLSessionWebSocketTask.CloseCode = .normalClosure, closeDelay: Int64 = 60) -> Endpoint {
         Endpoint(path: .websocket, queryItems: [.init(name: "closeCode", value: "\(closeCode.rawValue)"),
                                                 .init(name: "closeDelay", value: "\(closeDelay)")])
     }
@@ -229,7 +229,7 @@ struct Endpoint {
     @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
     static func websocketCount(_ count: Int = 2,
                                closeCode: URLSessionWebSocketTask.CloseCode = .normalClosure,
-                               closeDelay: Int64 = 30) -> Endpoint {
+                               closeDelay: Int64 = 60) -> Endpoint {
         Endpoint(path: .websocketCount(count), queryItems: [.init(name: "closeCode", value: "\(closeCode.rawValue)"),
                                                             .init(name: "closeDelay", value: "\(closeDelay)")])
     }

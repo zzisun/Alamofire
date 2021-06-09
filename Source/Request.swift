@@ -1442,6 +1442,8 @@ extension DataStreamRequest.Stream {
 
 // MARK: - WebSocketRequest
 
+#if !(os(Linux) || os(Windows))
+
 /// `Request` subclass which manages a WebSocket connection using `URLSessionWebSocketTask`.
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
 public class WebSocketRequest: Request {
@@ -1681,6 +1683,8 @@ public class WebSocketRequest: Request {
         }
     }
 }
+
+#endif
 
 // MARK: - DownloadRequest
 

@@ -6,14 +6,14 @@
 //  Copyright © 2021 Alamofire. All rights reserved.
 //
 
+#if !(os(Linux) || os(Windows))
+
 import Alamofire
 import Foundation
 import XCTest
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
 final class WebSocketTests: BaseTestCase {
-    private let closeDelay: Int64 = 50
-
     func testThatWebSocketsCanReceiveAMessage() {
         // Given
         let didConnect = expectation(description: "didConnect")
@@ -29,7 +29,7 @@ final class WebSocketTests: BaseTestCase {
         var receivedCompletion: WebSocketRequest.Completion?
 
         // When
-        session.websocketRequest(.websocket(closeDelay: closeDelay)).responseMessage { event in
+        session.websocketRequest(.websocket()).responseMessage { event in
             switch event.kind {
             case let .connected(`protocol`):
                 connectedProtocol = `protocol`
@@ -75,7 +75,7 @@ final class WebSocketTests: BaseTestCase {
         var receivedCompletion: WebSocketRequest.Completion?
 
         // When
-        session.websocketRequest(.websocket(closeDelay: closeDelay), protocol: `protocol`).responseMessage { event in
+        session.websocketRequest(.websocket(), protocol: `protocol`).responseMessage { event in
             switch event.kind {
             case let .connected(`protocol`):
                 connectedProtocol = `protocol`
@@ -123,7 +123,7 @@ final class WebSocketTests: BaseTestCase {
         var receivedCompletion: WebSocketRequest.Completion?
 
         // When
-        session.websocketRequest(.websocketCount(count, closeDelay: closeDelay)).responseMessage { event in
+        session.websocketRequest(.websocketCount(count)).responseMessage { event in
             switch event.kind {
             case let .connected(`protocol`):
                 connectedProtocol = `protocol`
@@ -201,11 +201,11 @@ final class WebSocketTests: BaseTestCase {
         XCTAssertNil(receivedCompletion?.error)
     }
 
-    func testMany() {
-        for _ in 0..<500 {
-            testThatWebSocketsCanSendAndReceiveMessages()
-        }
-    }
+//    func testMany() {
+//        for _ in 0..<500 {
+//            testThatWebSocketsCanSendAndReceiveMessages()
+//        }
+//    }
 
     func testThatWebSocketFailsWithTooSmallMaximumMessageSize() {
         // Given
@@ -217,7 +217,7 @@ final class WebSocketTests: BaseTestCase {
         var receivedCompletion: WebSocketRequest.Completion?
 
         // When
-        session.websocketRequest(.websocket(closeDelay: closeDelay), maximumMessageSize: 1).responseMessage { event in
+        session.websocketRequest(.websocket(), maximumMessageSize: 1).responseMessage { event in
             switch event.kind {
             case let .connected(`protocol`):
                 connectedProtocol = `protocol`
@@ -252,7 +252,7 @@ final class WebSocketTests: BaseTestCase {
         var receivedCompletion: WebSocketRequest.Completion?
 
         // When
-        session.websocketRequest(.websocket(closeCode: .goingAway, closeDelay: closeDelay)).responseMessage { event in
+        session.websocketRequest(.websocket(closeCode: .goingAway)).responseMessage { event in
             switch event.kind {
             case let .connected(`protocol`):
                 connectedProtocol = `protocol`
@@ -296,3 +296,5 @@ extension URLSessionWebSocketTask.Message: Equatable {
         }
     }
 }
+
+#endif
