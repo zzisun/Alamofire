@@ -220,6 +220,7 @@ struct Endpoint {
         Endpoint(path: .stream(count: count))
     }
 
+    #if !(os(Linux) || os(Windows))
     @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
     static func websocket(closeCode: URLSessionWebSocketTask.CloseCode = .normalClosure, closeDelay: Int64 = 60) -> Endpoint {
         Endpoint(path: .websocket, queryItems: [.init(name: "closeCode", value: "\(closeCode.rawValue)"),
@@ -236,6 +237,7 @@ struct Endpoint {
 
     @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
     static let websocketEcho = Endpoint(path: .websocketEcho)
+    #endif
 
     static var xml: Endpoint {
         Endpoint(path: .xml, headers: [.contentType("application/xml")])

@@ -456,6 +456,7 @@ open class Session {
         return request
     }
 
+    #if !(os(Linux) || os(Windows))
     @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
     open func websocketRequest(_ convertible: URLRequestConvertible,
                                protocol: String? = nil,
@@ -474,6 +475,7 @@ open class Session {
 
         return request
     }
+    #endif
 
     // MARK: - DownloadRequest
 
@@ -1045,12 +1047,14 @@ open class Session {
         performSetupOperations(for: request, convertible: request.convertible)
     }
 
+    #if !(os(Linux) || os(Windows))
     @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
     func performWebSocketRequest(_ request: WebSocketRequest) {
         dispatchPrecondition(condition: .onQueue(requestQueue))
 
         performSetupOperations(for: request, convertible: request.convertible)
     }
+    #endif
 
     func performUploadRequest(_ request: UploadRequest) {
         dispatchPrecondition(condition: .onQueue(requestQueue))
