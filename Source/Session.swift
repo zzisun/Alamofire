@@ -1018,12 +1018,16 @@ open class Session {
                 case let r as DownloadRequest: self.performDownloadRequest(r)
                 case let r as DataStreamRequest: self.performDataStreamRequest(r)
                 default:
+                    #if !(os(Linux) || os(Windows))
                     if #available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *),
                        let request = request as? WebSocketRequest {
                         self.performWebSocketRequest(request)
                     } else {
                         fatalError("Attempted to perform unsupported Request subclass: \(type(of: request))")
                     }
+                    #else
+                    fatalError("Attempted to perform unsupported Request subclass: \(type(of: request))")
+                    #endif
                 }
             }
         }
