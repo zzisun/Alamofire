@@ -41,7 +41,7 @@ public enum Method: String {
     case TRACE = "TRACE"
     case CONNECT = "CONNECT"
 }
-
+//TEST
 /**
     Used to specify the way in which a set of parameters are applied to a URL request.
 */
