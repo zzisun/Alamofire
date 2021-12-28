@@ -21,7 +21,7 @@
 // THE SOFTWARE.
 
 import Foundation
-
+// ㅣㅑㅁ
 /// Alamofire errors
 public let AlamofireErrorDomain = "com.alamofire.error"
 
